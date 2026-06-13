@@ -10,51 +10,50 @@
 
 ## Files to work on
 Only create or modify these files:
-- lib/api.ts
-- middleware.ts
-- next.config.ts
+- app/layout.tsx
+- app/actions/auth.ts
 
 ## This specific task
 ## Mục tiêu
 
-Tạo lib/api.ts (HTTP client wrapper) và middleware.ts (route protection) cho Next.js frontend.
+Tạo logoutAction Server Action để clear cookies và redirect về /login.
 
-## Dependency: S-1.5/TASK-4 phải hoàn thành trước.
+## Dependency: S-2.4/TASK-1 phải hoàn thành trước.
 
-## File: src/lib/api.ts
+## File: src/app/actions/auth.ts
 
 ```typescript
-const API_BASE = process.env.API_BASE_URL ?? 'http://localhost:8080'
+'use server'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-type FetchOptions = RequestInit & {
-  params?: Record<string, string | number>
+export async function logoutAction() {
+  const cookieStore = await cookies()
+  const refreshToken = cookieStore.get('tba_refresh_token')?.value
+
+  // Best-effort: call logout endpoint to revoke refresh token in DB
+  if (refreshToken) {
+    try {
+      await fetch(`${process.env.API_BASE_URL}/api/v1/auth/logout`, {
+        method: 'POST',
+        headers: { Cookie: `tba_refresh_token=${refreshToken}` },
+      })
+    } catch {
+      // Ignore network errors — still clear cookies
+    }
+  }
+
+  // Clear cookies regardless
+  cookieStore.delete('tba_access_token')
+  cookieStore.delete('tba_refresh_token')
+
+  redirect('/login')
 }
+```
 
-export async function apiFetch<T>(
-  path: string,
-  options: FetchOptions = {},
-  cookie?: string
-): Promise<T> {
-  const { params, ...init } = options
+## Cập nhật Dashboard layout để có Logout button
 
-  let url = `${API_BASE}${path}`
-  if (params) {
-    const qs = new URLSearchParams(Object.fromEntries(
-      Object.entries(params).map(([k, v]) => [k, String(v)])
-    ))
-    url += `?${qs.toString()}`
-  }
-
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    ...(cookie ? { Cookie: cookie } : {}),
-    ...init.headers,
-  }
-
-  const res = await fetch(url, { ...init, headers })
-
-  if (res.status === 401) {
-    // Caller (Server Component/Action) must handle redirect t
+### src/app/(dashboard)/layout.tsx
 
 ## Task scope — CRITICAL
 Implement ONLY what is described in "This specific task" above.
