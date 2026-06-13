@@ -46,7 +46,7 @@ async function ProjectsList() {
       { cache: 'no-store' },
       cookieHeader
     )
-  } catch (err) {
+  } catch {
     return (
       <div className="text-center py-12 bg-white rounded-xl border border-red-100 shadow-sm max-w-xl mx-auto p-6">
         <p className="text-red-500 font-medium">Đã xảy ra lỗi khi tải danh sách dự án.</p>
@@ -109,6 +109,25 @@ function ProjectsListSkeleton() {
   )
 }
 
+function GuestHomePanel() {
+  return (
+    <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm max-w-xl mx-auto p-8">
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">Trang chủ TBA</h3>
+      <p className="text-gray-500 mb-6 text-sm">
+        Đăng nhập để xem danh sách dự án, theo dõi tiến độ và tạo yêu cầu mới.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white">
+          <Link href="/login">Đăng nhập</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/register">Đăng ký tài khoản</Link>
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 export default async function Home() {
   const cookieStore = await cookies()
   const token = cookieStore.get('tba_access_token')?.value
@@ -119,6 +138,7 @@ export default async function Home() {
   }
 
   const displayName = user?.displayName || user?.email || 'Khách hàng'
+  const isAuthenticated = Boolean(user)
 
   return (
     <main className="min-h-screen bg-gray-50/50 pb-12">
@@ -143,7 +163,7 @@ export default async function Home() {
               )}
             </div>
           )}
-          {token ? (
+          {isAuthenticated ? (
             <form action={logoutAction}>
               <Button type="submit" variant="outline" size="sm" className="text-gray-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors">
                 Đăng xuất
@@ -166,16 +186,31 @@ export default async function Home() {
       <div className="bg-white border-b border-gray-200/80 py-8 px-6 mb-8">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Chào mừng trở lại, {displayName}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+              {isAuthenticated ? `Chào mừng trở lại, ${displayName}` : 'Chào mừng đến TBA'}
+            </h1>
             <p className="text-gray-500 mt-1">Hệ thống quản lý và bàn giao dự án</p>
           </div>
           <div className="flex gap-3 shrink-0">
-            <Button asChild variant="outline">
-              <Link href="/projects">Tất cả dự án</Link>
-            </Button>
-            <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
-              <Link href="/projects/new">+ Tạo dự án mới</Link>
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Button asChild variant="outline">
+                  <Link href="/projects">Tất cả dự án</Link>
+                </Button>
+                <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
+                  <Link href="/projects/new">+ Tạo dự án mới</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button asChild variant="outline">
+                  <Link href="/login">Đăng nhập</Link>
+                </Button>
+                <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
+                  <Link href="/register">Đăng ký</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -185,11 +220,17 @@ export default async function Home() {
         {/* Left Columns: Projects Grid */}
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Dự án gần đây</h2>
+            <h2 className="text-xl font-bold text-gray-900">
+              {isAuthenticated ? 'Dự án gần đây' : 'Tổng quan'}
+            </h2>
           </div>
-          <Suspense fallback={<ProjectsListSkeleton />}>
-            <ProjectsList />
-          </Suspense>
+          {isAuthenticated ? (
+            <Suspense fallback={<ProjectsListSkeleton />}>
+              <ProjectsList />
+            </Suspense>
+          ) : (
+            <GuestHomePanel />
+          )}
         </div>
 
         {/* Right Column: Sidebar */}
@@ -210,17 +251,27 @@ export default async function Home() {
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                  <span>Danh sách dự án</span>
-                  <span className="text-xs text-gray-400">/projects</span>
+                <Link href="/components" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
+                  <span>Thư viện component</span>
+                  <span className="text-xs text-gray-400">/components</span>
                 </Link>
               </li>
-              <li>
-                <Link href="/projects/new" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                  <span>Tạo dự án mới</span>
-                  <span className="text-xs text-gray-400">/projects/new</span>
-                </Link>
-              </li>
+              {isAuthenticated && (
+                <>
+                  <li>
+                    <Link href="/projects" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
+                      <span>Danh sách dự án</span>
+                      <span className="text-xs text-gray-400">/projects</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/projects/new" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
+                      <span>Tạo dự án mới</span>
+                      <span className="text-xs text-gray-400">/projects/new</span>
+                    </Link>
+                  </li>
+                </>
+              )}
               {user?.role === 'ADMIN' && (
                 <li>
                   <Link href="/admin" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
