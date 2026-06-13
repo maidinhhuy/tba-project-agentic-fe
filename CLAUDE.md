@@ -10,50 +10,42 @@
 
 ## Files to work on
 Only create or modify these files:
-- app/layout.tsx
+- app/register/verify-email/page.tsx
 - app/actions/auth.ts
 
 ## This specific task
 ## Mục tiêu
 
-Tạo logoutAction Server Action để clear cookies và redirect về /login.
+Tạo /register/verify-email page: hiển thị hướng dẫn, xử lý click verify link (token từ URL), và form resend email.
 
-## Dependency: S-2.4/TASK-1 phải hoàn thành trước.
+## Dependency: S-2.4/TASK-2, S-2.3/TASK-4 (verify/resend endpoints exists).
 
-## File: src/app/actions/auth.ts
+## File: src/app/(auth)/register/verify-email/page.tsx
 
 ```typescript
-'use server'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
+import VerifyEmailClient from './_components/VerifyEmailClient'
 
-export async function logoutAction() {
-  const cookieStore = await cookies()
-  const refreshToken = cookieStore.get('tba_refresh_token')?.value
-
-  // Best-effort: call logout endpoint to revoke refresh token in DB
-  if (refreshToken) {
-    try {
-      await fetch(`${process.env.API_BASE_URL}/api/v1/auth/logout`, {
-        method: 'POST',
-        headers: { Cookie: `tba_refresh_token=${refreshToken}` },
-      })
-    } catch {
-      // Ignore network errors — still clear cookies
-    }
-  }
-
-  // Clear cookies regardless
-  cookieStore.delete('tba_access_token')
-  cookieStore.delete('tba_refresh_token')
-
-  redirect('/login')
+export default function VerifyEmailPage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow text-center">
+        <Suspense fallback={<p>Loading...</p>}>
+          <VerifyEmailClient />
+        </Suspense>
+      </div>
+    </div>
+  )
 }
 ```
 
-## Cập nhật Dashboard layout để có Logout button
+## File: src/app/(auth)/register/verify-email/_components/VerifyEmailClient.tsx
 
-### src/app/(dashboard)/layout.tsx
+```typescript
+'use client'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { verifyEmailAction, resendVerificationAction } from '
 
 ## Task scope — CRITICAL
 Implement ONLY what is described in "This specific task" above.
