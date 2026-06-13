@@ -1,16 +1,16 @@
 .PHONY: test dev build lint compile
 
 test:
-	npm test
+	pnpm test
 
 dev:
-	npm run dev
+	pnpm dev
 
 build:
-	npm run build
+	pnpm build
 
 lint:
-	npm run lint
+	pnpm lint
 
 compile:
-	npx tsc --noEmit
+	pnpm exec tsc --noEmit
