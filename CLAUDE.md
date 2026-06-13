@@ -10,44 +10,44 @@
 
 ## Files to work on
 Only create or modify these files:
-- app/login/page.tsx
+- app/register/page.tsx
 - app/actions/auth.ts
 
 ## This specific task
 ## Mục tiêu
 
-Tạo /login page với form React Hook Form + Zod validation, và loginAction Server Action gọi API backend.
+Tạo /register page với form validation và registerAction Server Action gọi backend registration API.
 
-## Dependency: S-1.5/TASK-5 (lib/api.ts), S-2.1/TASK-5 (login endpoint exists).
+## Dependency: S-2.4/TASK-1, S-2.3/TASK-4 (register endpoint exists).
 
-## File: src/app/(auth)/login/page.tsx
+## File: src/app/(auth)/register/page.tsx
 
 ```typescript
-import LoginForm from './_components/LoginForm'
+import RegisterForm from './_components/RegisterForm'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-2 text-teal-600">TBA</h1>
-        <p className="text-center text-gray-500 mb-8">Sign in to your account</p>
-        <LoginForm />
+        <p className="text-center text-gray-500 mb-8">Create your account</p>
+        <RegisterForm />
       </div>
     </div>
   )
 }
 ```
 
-## File: src/app/(auth)/login/_components/LoginForm.tsx
+## File: src/app/(auth)/register/_components/RegisterForm.tsx
 
 ```typescript
 'use client'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { loginAction } from '../actions'
+import { registerAction } from '../actions'
 import { Button } from '@/components/ui/button'
-import { Input
+import {
 
 ## Task scope — CRITICAL
 Implement ONLY what is described in "This specific task" above.
