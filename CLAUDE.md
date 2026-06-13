@@ -10,44 +10,42 @@
 
 ## Files to work on
 Only create or modify these files:
-- app/register/page.tsx
+- app/register/verify-email/page.tsx
 - app/actions/auth.ts
 
 ## This specific task
 ## Mục tiêu
 
-Tạo /register page với form validation và registerAction Server Action gọi backend registration API.
+Tạo /register/verify-email page: hiển thị hướng dẫn, xử lý click verify link (token từ URL), và form resend email.
 
-## Dependency: S-2.4/TASK-1, S-2.3/TASK-4 (register endpoint exists).
+## Dependency: S-2.4/TASK-2, S-2.3/TASK-4 (verify/resend endpoints exists).
 
-## File: src/app/(auth)/register/page.tsx
+## File: src/app/(auth)/register/verify-email/page.tsx
 
 ```typescript
-import RegisterForm from './_components/RegisterForm'
+import { Suspense } from 'react'
+import VerifyEmailClient from './_components/VerifyEmailClient'
 
-export default function RegisterPage() {
+export default function VerifyEmailPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-2 text-teal-600">TBA</h1>
-        <p className="text-center text-gray-500 mb-8">Create your account</p>
-        <RegisterForm />
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow text-center">
+        <Suspense fallback={<p>Loading...</p>}>
+          <VerifyEmailClient />
+        </Suspense>
       </div>
     </div>
   )
 }
 ```
 
-## File: src/app/(auth)/register/_components/RegisterForm.tsx
+## File: src/app/(auth)/register/verify-email/_components/VerifyEmailClient.tsx
 
 ```typescript
 'use client'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { registerAction } from '../actions'
-import { Button } from '@/components/ui/button'
-import {
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { verifyEmailAction, resendVerificationAction } from '
 
 ## Task scope — CRITICAL
 Implement ONLY what is described in "This specific task" above.
