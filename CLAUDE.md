@@ -10,51 +10,42 @@
 
 ## Files to work on
 Only create or modify these files:
-- lib/api.ts
-- middleware.ts
-- next.config.ts
+- app/register/verify-email/page.tsx
+- app/actions/auth.ts
 
 ## This specific task
 ## Mục tiêu
 
-Tạo lib/api.ts (HTTP client wrapper) và middleware.ts (route protection) cho Next.js frontend.
+Tạo /register/verify-email page: hiển thị hướng dẫn, xử lý click verify link (token từ URL), và form resend email.
 
-## Dependency: S-1.5/TASK-4 phải hoàn thành trước.
+## Dependency: S-2.4/TASK-2, S-2.3/TASK-4 (verify/resend endpoints exists).
 
-## File: src/lib/api.ts
+## File: src/app/(auth)/register/verify-email/page.tsx
 
 ```typescript
-const API_BASE = process.env.API_BASE_URL ?? 'http://localhost:8080'
+import { Suspense } from 'react'
+import VerifyEmailClient from './_components/VerifyEmailClient'
 
-type FetchOptions = RequestInit & {
-  params?: Record<string, string | number>
+export default function VerifyEmailPage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow text-center">
+        <Suspense fallback={<p>Loading...</p>}>
+          <VerifyEmailClient />
+        </Suspense>
+      </div>
+    </div>
+  )
 }
+```
 
-export async function apiFetch<T>(
-  path: string,
-  options: FetchOptions = {},
-  cookie?: string
-): Promise<T> {
-  const { params, ...init } = options
+## File: src/app/(auth)/register/verify-email/_components/VerifyEmailClient.tsx
 
-  let url = `${API_BASE}${path}`
-  if (params) {
-    const qs = new URLSearchParams(Object.fromEntries(
-      Object.entries(params).map(([k, v]) => [k, String(v)])
-    ))
-    url += `?${qs.toString()}`
-  }
-
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    ...(cookie ? { Cookie: cookie } : {}),
-    ...init.headers,
-  }
-
-  const res = await fetch(url, { ...init, headers })
-
-  if (res.status === 401) {
-    // Caller (Server Component/Action) must handle redirect t
+```typescript
+'use client'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { verifyEmailAction, resendVerificationAction } from '
 
 ## Task scope — CRITICAL
 Implement ONLY what is described in "This specific task" above.
