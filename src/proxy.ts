@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const PUBLIC_PATHS = ['/login', '/register', '/403']
+const PUBLIC_PATHS = ['/', '/components', '/login', '/register', '/403']
 const ADMIN_PATHS = ['/admin']
 
-export function middleware(request: NextRequest) {
+function isPublicPath(pathname: string) {
+  return PUBLIC_PATHS.some(path =>
+    pathname === path || (path !== '/' && pathname.startsWith(`${path}/`))
+  )
+}
+
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get('tba_access_token')?.value
 
   // Allow public paths
-  if (PUBLIC_PATHS.some(p => pathname.startsWith(p))) {
+  if (isPublicPath(pathname)) {
     return NextResponse.next()
   }
 
