@@ -10,44 +10,51 @@
 
 ## Files to work on
 Only create or modify these files:
-- app/register/page.tsx
-- app/actions/auth.ts
+- lib/api.ts
+- middleware.ts
+- next.config.ts
 
 ## This specific task
 ## Mục tiêu
 
-Tạo /register page với form validation và registerAction Server Action gọi backend registration API.
+Tạo lib/api.ts (HTTP client wrapper) và middleware.ts (route protection) cho Next.js frontend.
 
-## Dependency: S-2.4/TASK-1, S-2.3/TASK-4 (register endpoint exists).
+## Dependency: S-1.5/TASK-4 phải hoàn thành trước.
 
-## File: src/app/(auth)/register/page.tsx
+## File: src/lib/api.ts
 
 ```typescript
-import RegisterForm from './_components/RegisterForm'
+const API_BASE = process.env.API_BASE_URL ?? 'http://localhost:8080'
 
-export default function RegisterPage() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-2 text-teal-600">TBA</h1>
-        <p className="text-center text-gray-500 mb-8">Create your account</p>
-        <RegisterForm />
-      </div>
-    </div>
-  )
+type FetchOptions = RequestInit & {
+  params?: Record<string, string | number>
 }
-```
 
-## File: src/app/(auth)/register/_components/RegisterForm.tsx
+export async function apiFetch<T>(
+  path: string,
+  options: FetchOptions = {},
+  cookie?: string
+): Promise<T> {
+  const { params, ...init } = options
 
-```typescript
-'use client'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { registerAction } from '../actions'
-import { Button } from '@/components/ui/button'
-import {
+  let url = `${API_BASE}${path}`
+  if (params) {
+    const qs = new URLSearchParams(Object.fromEntries(
+      Object.entries(params).map(([k, v]) => [k, String(v)])
+    ))
+    url += `?${qs.toString()}`
+  }
+
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    ...(cookie ? { Cookie: cookie } : {}),
+    ...init.headers,
+  }
+
+  const res = await fetch(url, { ...init, headers })
+
+  if (res.status === 401) {
+    // Caller (Server Component/Action) must handle redirect t
 
 ## Task scope — CRITICAL
 Implement ONLY what is described in "This specific task" above.
