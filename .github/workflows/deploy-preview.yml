@@ -3,7 +3,7 @@ name: Deploy Preview to Vercel
 on:
   push:
     branches:
-      - dev
+      - staging
 
 permissions:
   contents: read
