@@ -43,3 +43,11 @@ next-env.d.ts
 # tooling
 .serena/
 .aider*
+
+# Auto-added by agent
+# Agent-added: build artifacts to never commit
+node_modules/
+.pnpm-store/
+dist/
+build/
+*.log
