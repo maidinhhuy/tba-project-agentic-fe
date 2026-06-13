@@ -36,6 +36,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       )}
       aria-label={`Status: ${config.label}`}
     >
+      <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true" />
       {config.label}
     </span>
   )

@@ -1,6 +1,15 @@
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('tba_access_token')?.value
+
+  if (token) {
+    redirect('/projects')
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md space-y-8 text-center">
