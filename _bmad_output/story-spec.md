@@ -1,51 +1,93 @@
 ---
 status: ready-for-dev
 story_id: ST0
-task_id: 37df1ca0-0331-8128-98e6-d14db2f539d9
+task_id: 37cf1ca0-0331-8117-ac48-fe28bf2c8cf1
 ---
 
-# Story: Create Makefile with test/dev/build targets (Frontend Init)
+# Story: Setup Tailwind + globals.css teal override + 8 status CSS token pairs (Frontend Init)
 
 ## Description
 
 ## Mục tiêu
 
-Tạo Makefile tại root của FE repository với các targets chuẩn theo AD-19 convention — agent chạy test đồng nhất qua make test.
+Cấu hình Tailwind với teal design token #0D9488 và tạo 8 CSS status token pairs cho project statuses.
 
 ## Dependency: S-1.5/TASK-1 phải hoàn thành trước.
 
-## File: Makefile
+## File: tailwind.config.ts
 
-```makefile
-.PHONY: test dev build lint compile
+```typescript
+import type { Config } from 'tailwindcss'
 
-test:
-	npm test
+const config: Config = {
+  content: ['./src/**/*.{ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        teal: {
+          50:  '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',  // ← primary brand color
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+        },
+        primary: '#0d9488',
+      }
+    }
+  },
+  plugins: [],
+}
+export default config
+```
 
-dev:
-	npm run dev
+## File: src/app/globals.css
 
-build:
-	npm run build
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-lint:
-	npm run lint
+@layer base {
+  :root {
+    --color-primary: #0d9488;
+    --color-primary-hover: #0f766e;
+  }
+}
 
-compile:
-	npx tsc --noEmit
+@layer utilities {
+  /* 8 Project Status tokens — background + text + border */
+  .status-submitted    { @apply bg-gray-100 text-gray-700 border-gray-300; }
+  .status-analyzing    { @apply bg-blue-100 text-blue-700 border-blue-300; }
+  .status-in-development { @apply bg-indigo-100 text-indigo-700 border-indigo-300; }
+  .status-awaiting-review { @apply bg-yellow-100 text-yellow-700 border-yellow-300; }
+  .status-in-revision  { @apply bg-orange-100 text-orange-700 border-orange-300; }
+  .status-finalizing   { @apply bg-teal-100 text-teal-700 border-teal-300; }
+  .status-delivered    { @apply bg-green-100 text-green-700 border-green-300; }
+  .status-cancelled    { @apply bg-red-100 text-red-700 border-red-300; }
+}
+```
+
+## File: src/lib/cn.ts
+
+```typescript
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 ```
 
 ## Verify
 
-- make test → chạy npm test không lỗi
+- npm run build → no Tailwind errors
 
-- make dev → khởi động Next.js dev server trên port 3000
-
-- make build → Next.js production build thành công, không có TypeScript errors
-
-- make lint → ESLint chạy không có lỗi
-
-- make compile → tsc --noEmit pass, không có type errors (nhanh hơn make build)
+- Status classes xuất hiện trong generated CSS
 
 ## Acceptance Criteria
 
@@ -77,7 +119,9 @@ And Makefile includes test target: npm test. Agent chạy test bằng make test.
 
 ## Files to Create or Modify
 
-- Makefile
+- app/globals.css
+- tailwind.config.ts
+- components.json
 
 ## Dev Notes
 
