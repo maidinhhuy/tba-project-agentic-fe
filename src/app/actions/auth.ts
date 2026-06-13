@@ -61,3 +61,26 @@ export async function registerAction(data: {
   }
 }
 
+export async function logoutAction() {
+  const cookieStore = await cookies()
+  const refreshToken = cookieStore.get('tba_refresh_token')?.value
+
+  // Best-effort: call logout endpoint to revoke refresh token in DB
+  if (refreshToken) {
+    try {
+      await fetch(`${process.env.API_BASE_URL}/api/v1/auth/logout`, {
+        method: 'POST',
+        headers: { Cookie: `tba_refresh_token=${refreshToken}` },
+      })
+    } catch {
+      // Ignore network errors — still clear cookies
+    }
+  }
+
+  // Clear cookies regardless
+  cookieStore.delete('tba_access_token')
+  cookieStore.delete('tba_refresh_token')
+
+  redirect('/login')
+}
+
