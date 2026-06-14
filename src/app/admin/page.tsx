@@ -341,9 +341,9 @@ async function AdminProjectsTable({
     fetchParams.sortDir = searchParams.sortDir
   }
 
-  let data: PagedResponse
+  let data: ProjectSummary[]
   try {
-    data = await apiFetch<PagedResponse>(
+    data = await apiFetch<ProjectSummary[]>(
       '/api/v1/admin/projects',
       {
         cache: 'no-store',
@@ -387,7 +387,7 @@ async function AdminProjectsTable({
     <div className="space-y-4">
       {/* Show count of projects matching the criteria */}
       <div className="flex items-center justify-between px-1">
-        <p className="text-gray-500 text-sm">{data.total} total projects</p>
+        <p className="text-gray-500 text-sm">{data.length} total projects</p>
       </div>
 
       <div className="bg-white border border-gray-200/80 rounded-xl shadow-sm overflow-hidden">

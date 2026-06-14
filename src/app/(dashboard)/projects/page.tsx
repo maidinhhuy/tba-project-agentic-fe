@@ -10,7 +10,7 @@ async function ProjectsList() {
   const cookieStore = await cookies()
   const cookieHeader = cookieStore.toString()
 
-  const data = await apiFetch<{ items: ProjectSummary[]; total: number }>(
+  const data = await apiFetch<ProjectSummary[]>(
     '/api/v1/customer/projects',
     { cache: 'no-store' },
     cookieHeader
