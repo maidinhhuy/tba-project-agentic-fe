@@ -1,3 +1,4 @@
+// Project detail page component
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { cookies } from 'next/headers'

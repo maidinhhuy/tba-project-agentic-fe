@@ -137,7 +137,7 @@ export default async function Home() {
     user = decodeJwt(token)
   }
 
-  const displayName = user?.displayName || user?.email || 'Khách hàng'
+  const displayName = user?.displayName || 'Khách hàng'
   const isAuthenticated = Boolean(user)
 
   return (
@@ -235,65 +235,6 @@ export default async function Home() {
 
         {/* Right Column: Sidebar */}
         <div className="space-y-6">
-          {/* Quick Links Card */}
-          <div className="bg-white rounded-xl border border-gray-200/80 p-6 shadow-sm">
-            <h3 className="font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
-              <svg className="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-              Liên kết nhanh
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                  <span>Trang chủ</span>
-                  <span className="text-xs text-gray-400">/</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/components" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                  <span>Thư viện component</span>
-                  <span className="text-xs text-gray-400">/components</span>
-                </Link>
-              </li>
-              {isAuthenticated && (
-                <>
-                  <li>
-                    <Link href="/projects" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                      <span>Danh sách dự án</span>
-                      <span className="text-xs text-gray-400">/projects</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/projects/new" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                      <span>Tạo dự án mới</span>
-                      <span className="text-xs text-gray-400">/projects/new</span>
-                    </Link>
-                  </li>
-                </>
-              )}
-              {user?.role === 'ADMIN' && (
-                <li>
-                  <Link href="/admin" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                    <span className="font-medium text-red-600">Quản trị viên</span>
-                    <span className="text-xs text-gray-400">/admin</span>
-                  </Link>
-                </li>
-              )}
-              <li>
-                <Link href="/login" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                  <span>Đăng nhập</span>
-                  <span className="text-xs text-gray-400">/login</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/register" className="flex items-center justify-between text-sm text-gray-600 hover:text-teal-600 hover:bg-teal-50/50 p-2 rounded-lg transition-colors">
-                  <span>Đăng ký</span>
-                  <span className="text-xs text-gray-400">/register</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
 
           {/* Project Status Guide Card */}
           <div className="bg-white rounded-xl border border-gray-200/80 p-6 shadow-sm">
