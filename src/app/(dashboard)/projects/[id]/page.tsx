@@ -220,9 +220,7 @@ async function ProjectDetailContent({ id }: { id: string }) {
                         {new Date(entry.changedAt).toLocaleString('vi-VN')}
                       </time>
                       <div className="flex-1 bg-gray-50 dark:bg-muted/50 rounded-lg p-3 border border-gray-100 dark:border-border/50">
-                        <span className="text-gray-700 dark:text-gray-300 font-medium block">
-                          {entry.reason}
-                        </span>
+                        <MarkdownPreview content={entry.reason ?? ''} className="text-sm" />
                         {entry.changedBy && (
                           <span className="text-xs text-gray-400 dark:text-gray-500 mt-1 block">
                             Được thực hiện bởi: {entry.changedBy}
