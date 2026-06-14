@@ -367,7 +367,7 @@ async function AdminProjectsTable({
     )
   }
 
-  if (!data || !data.items || data.items.length === 0) {
+  if (!data || !data || data.length === 0) {
     return (
       <div className="text-center py-16 bg-white rounded-xl border border-gray-200/80 shadow-sm max-w-xl mx-auto p-8">
         <div className="mx-auto w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mb-4 text-teal-500">
@@ -415,7 +415,7 @@ async function AdminProjectsTable({
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {data.items.map((project) => {
+              {data.map((project) => {
                 const customerInfo = project.customerName || project.customerEmail || '—'
                 const projectName = project.projectName || project.name || '—'
                 const milestoneInfo = project.activeMilestoneName || project.productType || '—'
@@ -463,7 +463,7 @@ async function AdminProjectsTable({
 
         {/* Mobile Card List View */}
         <div className="block md:hidden divide-y divide-gray-100">
-          {data.items.map((project) => {
+          {data.map((project) => {
             const customerInfo = project.customerName || project.customerEmail || '—'
             const projectName = project.projectName || project.name || '—'
             const milestoneInfo = project.activeMilestoneName || project.productType || '—'

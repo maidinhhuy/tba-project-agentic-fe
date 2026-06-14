@@ -55,7 +55,7 @@ async function ProjectsList() {
     )
   }
 
-  if (data.items.length === 0) {
+  if (data.length === 0) {
     return (
       <div className="text-center py-16 bg-white rounded-xl border border-gray-100 shadow-sm max-w-xl mx-auto p-8">
         <div className="mx-auto w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mb-4 text-teal-500">
@@ -76,7 +76,7 @@ async function ProjectsList() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full">
-      {data.items.map(project => (
+      {data.map(project => (
         <ProjectCard key={project.projectId} {...project} />
       ))}
     </div>
