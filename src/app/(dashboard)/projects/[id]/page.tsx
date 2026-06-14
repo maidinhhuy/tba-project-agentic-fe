@@ -7,6 +7,8 @@ import { apiFetch, ApiError } from '@/lib/api'
 import { StatusBadge } from '@/components/status-badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { MarkdownPreview } from '@/components/MarkdownPreview'
+
 
 interface Milestone {
   milestoneId: number
@@ -175,9 +177,8 @@ async function ProjectDetailContent({ id }: { id: string }) {
               </h2>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
-                {project.description}
-              </p>
+              <MarkdownPreview content={project.description} />
+
               {project.reference && (
                 <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
                   <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
