@@ -55,7 +55,7 @@ export default function ProjectForm() {
   const { register, handleSubmit, control, watch, setValue, formState: { errors, isSubmitting } } =
     useForm<FormValues>({
       resolver: zodResolver(schema),
-      defaultValues: { name: '', productType: '' as any, description: '', reference: '' }
+      defaultValues: { name: '', productType: '' as 'WEB' | 'MOBILE', description: '', reference: '' }
     })
 
   const descriptionLength = watch('description')?.length ?? 0

@@ -118,7 +118,7 @@ export default async function AdminProjectDetailPage({ params }: { params: Promi
                     <span className="text-gray-400 text-xs font-medium">({h.changedBy})</span>
                     {h.reason && (
                       <span className="text-gray-500 italic pl-2 border-l border-gray-200 block sm:inline">
-                        "{h.reason}"
+                        &quot;{h.reason}&quot;
                       </span>
                     )}
                   </div>

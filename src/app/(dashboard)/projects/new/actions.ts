@@ -1,13 +1,6 @@
 'use server'
 import { cookies } from 'next/headers'
 
-declare global {
-  interface Object {
-    length: number;
-    map(callback: (item: any) => any): any[];
-  }
-}
-
 export async function submitProjectAction(data: {
   name: string
   productType: string

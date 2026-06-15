@@ -25,7 +25,7 @@ export async function loginAction(data: { email: string; password: string }) {
       const [name, value] = nameVal.split('=')
       cookieStore.set(name.trim(), value.trim(), { httpOnly: true, path: '/' })
     }
-  } catch (e) {
+  } catch {
     return { error: 'Connection error. Please try again.' }
   }
   redirect('/projects')
@@ -56,7 +56,7 @@ export async function registerAction(data: {
     }
 
     return { success: true }
-  } catch (e) {
+  } catch {
     return { error: 'Connection error. Please try again.' }
   }
 }
@@ -91,7 +91,7 @@ export async function verifyEmailAction(token: string) {
     })
     if (!res.ok) return { error: 'Link expired or invalid. Please request a new one.' }
     return { success: true }
-  } catch (e) {
+  } catch {
     return { error: 'Connection error. Please try again.' }
   }
 }
@@ -103,7 +103,7 @@ export async function resendVerificationAction(email: string) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
     })
-  } catch (e) {
+  } catch {
     // Always succeed (don't reveal email existence)
   }
 }
