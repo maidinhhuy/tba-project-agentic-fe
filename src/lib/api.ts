@@ -1,3 +1,5 @@
+import { redirect } from 'next/navigation'
+
 const API_BASE = process.env.API_BASE_URL ?? 'http://localhost:8080'
 
 type FetchOptions = RequestInit & {
@@ -28,8 +30,7 @@ export async function apiFetch<T>(
   const res = await fetch(url, { ...init, headers })
 
   if (res.status === 401) {
-    // Caller (Server Component/Action) must handle redirect to /login
-    throw new ApiError(401, 'Unauthorized')
+    redirect('/login')
   }
 
   if (!res.ok) {
