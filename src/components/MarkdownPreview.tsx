@@ -18,7 +18,7 @@ export function parseMarkdown(text: string): Block[] {
   let currentBlock: Block | null = null
   
   const parseSeparator = (line: string): ('left' | 'center' | 'right')[] | null => {
-    let columns = line.split('|')
+    const columns = line.split('|')
     if (columns[0].trim() === '') columns.shift()
     if (columns[columns.length - 1]?.trim() === '') columns.pop()
     
@@ -83,7 +83,7 @@ export function parseMarkdown(text: string): Block[] {
       if (alignments) {
         // This is a table header!
         const headerLine = line
-        let headerCols = headerLine.split('|').map(s => s.trim())
+        const headerCols = headerLine.split('|').map(s => s.trim())
         if (headerLine.trim().startsWith('|')) headerCols.shift()
         if (headerLine.trim().endsWith('|')) headerCols.pop()
         
@@ -112,7 +112,7 @@ export function parseMarkdown(text: string): Block[] {
             break // Ends the table
           }
           
-          let rowCols = rowLine.split('|').map(s => s.trim())
+          const rowCols = rowLine.split('|').map(s => s.trim())
           if (rowLine.trim().startsWith('|')) rowCols.shift()
           if (rowLine.trim().endsWith('|')) rowCols.pop()
           
@@ -136,7 +136,7 @@ export function parseMarkdown(text: string): Block[] {
       }
       const level = headingMatch[1].length
       const content = headingMatch[2]
-      blocks.push({ type: `h${level}` as any, content })
+      blocks.push({ type: `h${level}` as Block['type'], content })
       continue
     }
     

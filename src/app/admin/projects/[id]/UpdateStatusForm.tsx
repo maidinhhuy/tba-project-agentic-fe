@@ -68,8 +68,8 @@ export function UpdateStatusForm({
         toast({ title: 'Updated and notified the customer.', duration: 4000 })
         setNewStatus('')
         setReason('')
-      } catch (e: any) {
-        toast({ title: e.message ?? 'An error occurred.', variant: 'destructive' })
+      } catch (e: unknown) {
+        toast({ title: e instanceof Error ? e.message : 'An error occurred.', variant: 'destructive' })
       }
     })
   }

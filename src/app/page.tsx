@@ -63,7 +63,7 @@ async function ProjectsList() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V4a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">You don't have any projects yet</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">You don&apos;t have any projects yet</h3>
         <p className="text-gray-500 mb-6 text-sm max-w-md mx-auto">
           Start managing your projects by creating your first project now.
         </p>

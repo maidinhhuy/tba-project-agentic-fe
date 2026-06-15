@@ -351,8 +351,8 @@ async function AdminProjectsTable({
       },
       cookieStore.toString()
     )
-  } catch (e: any) {
-    if (e.status === 401) {
+  } catch (e: unknown) {
+    if ((e as { status?: number })?.status === 401) {
       return (
         <div className="text-center py-12 bg-white rounded-xl border border-red-100 shadow-sm max-w-xl mx-auto p-6">
           <p className="text-red-500 font-medium">You do not have permission to access this page.</p>
