@@ -35,7 +35,7 @@ export default function RegisterForm() {
       if (result.error.includes('already')) setError('email', { message: result.error })
       else setError('root', { message: result.error })
     } else {
-      router.push(`/register/verify-email?email=${encodeURIComponent(data.email)}`)
+      router.push('/login')
     }
   }
 

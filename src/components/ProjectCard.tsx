@@ -42,7 +42,7 @@ export function ProjectCard({
   createdAt,
   updatedAt,
 }: ProjectCardProps) {
-  const dateStr = new Date(updatedAt).toLocaleDateString('vi-VN', {
+  const dateStr = new Date(updatedAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
@@ -63,7 +63,7 @@ export function ProjectCard({
         <CardContent className="p-4 pt-0 flex justify-between items-center mt-auto">
           <span className="text-xs text-gray-400">{dateStr}</span>
           <span className="text-xs font-medium text-teal-600 hover:underline">
-            Xem chi tiết
+            View details
           </span>
         </CardContent>
       </Card>

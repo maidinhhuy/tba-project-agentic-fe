@@ -132,10 +132,10 @@ export default function ComponentsPage() {
           </Link>
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" size="sm">
-              <Link href="/">Trang chủ</Link>
+              <Link href="/">Home</Link>
             </Button>
             <Button asChild size="sm" className="bg-teal-600 text-white hover:bg-teal-700">
-              <Link href="/login">Đăng nhập</Link>
+              <Link href="/login">Log in</Link>
             </Button>
           </div>
         </div>
@@ -145,10 +145,10 @@ export default function ComponentsPage() {
         <header className="border-b border-gray-200 pb-8">
           <p className="text-sm font-medium text-teal-700">Public component gallery</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-950">
-            Thư viện component TBA
+            TBA Component Library
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-gray-500">
-            Một trang public để kiểm tra nhanh trạng thái hiển thị của các component đang có trong
+            A public page to quickly test the visual state of the components present in the
             codebase.
           </p>
         </header>
