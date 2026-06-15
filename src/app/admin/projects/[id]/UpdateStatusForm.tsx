@@ -65,11 +65,11 @@ export function UpdateStatusForm({
     startTransition(async () => {
       try {
         await updateProjectStatusAction(projectId, newStatus, reason || null, forceRevision)
-        toast({ title: 'Đã cập nhật và thông báo cho khách hàng.', duration: 4000 })
+        toast({ title: 'Updated and notified the customer.', duration: 4000 })
         setNewStatus('')
         setReason('')
       } catch (e: any) {
-        toast({ title: e.message ?? 'Có lỗi xảy ra.', variant: 'destructive' })
+        toast({ title: e.message ?? 'An error occurred.', variant: 'destructive' })
       }
     })
   }
@@ -77,18 +77,18 @@ export function UpdateStatusForm({
   return (
     <div className="border border-gray-200/80 rounded-xl p-5 bg-white shadow-sm space-y-4">
       <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-        <h2 className="font-semibold text-gray-900 text-lg">Cập nhật trạng thái</h2>
+        <h2 className="font-semibold text-gray-900 text-lg">Update status</h2>
         <div className="text-xs text-gray-500 bg-gray-50 px-2.5 py-1 rounded-full border border-gray-100">
-          Lượt chỉnh sửa còn lại: <strong className="text-gray-700">{revisionCount}</strong>
+          Remaining revisions: <strong className="text-gray-700">{revisionCount}</strong>
         </div>
       </div>
 
       <div className="space-y-4">
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái mới</label>
+          <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">New Status</label>
           <Select value={newStatus} onValueChange={setNewStatus}>
             <SelectTrigger className="w-full border-gray-200 focus:ring-teal-500">
-              <SelectValue placeholder="Chọn trạng thái mới..." />
+              <SelectValue placeholder="Select new status..." />
             </SelectTrigger>
             <SelectContent>
               {allowedTransitions.map(s => (
@@ -101,9 +101,9 @@ export function UpdateStatusForm({
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">Ghi chú cho khách hàng</label>
+          <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">Notes for customer</label>
           <Textarea
-            placeholder="Ghi chú cho khách hàng (tuỳ chọn)..."
+            placeholder="Notes for customer (optional)..."
             value={reason}
             onChange={e => setReason(e.target.value)}
             rows={3}
@@ -117,7 +117,7 @@ export function UpdateStatusForm({
             disabled={!newStatus || isPending}
             className="bg-teal-600 hover:bg-teal-700 text-white font-medium px-5 transition-colors disabled:opacity-50"
           >
-            {isPending ? 'Đang lưu...' : 'Lưu & Thông báo'}
+            {isPending ? 'Saving...' : 'Save & Notify'}
           </Button>
         </div>
       </div>
@@ -126,10 +126,10 @@ export function UpdateStatusForm({
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold flex items-center gap-2 text-gray-900">
-              Xác nhận thay đổi trạng thái
+              Confirm status change
             </DialogTitle>
             <DialogDescription className="text-sm font-medium text-destructive mt-3">
-              ⚠️ Khách hàng đã hết lượt chỉnh sửa. Bạn có chắc muốn tiếp tục?
+              ⚠️ The customer has no revisions remaining. Are you sure you want to continue?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex gap-2 justify-end">
@@ -138,7 +138,7 @@ export function UpdateStatusForm({
               size="sm"
               onClick={() => setShowWarning(false)}
             >
-              Huỷ
+              Cancel
             </Button>
             <Button
               variant="destructive"
@@ -148,7 +148,7 @@ export function UpdateStatusForm({
                 handleSubmit(true)
               }}
             >
-              Xác nhận
+              Confirm
             </Button>
           </DialogFooter>
         </DialogContent>

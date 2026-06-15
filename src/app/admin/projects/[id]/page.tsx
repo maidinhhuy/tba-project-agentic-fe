@@ -61,7 +61,7 @@ export default async function AdminProjectDetailPage({ params }: { params: Promi
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Quay lại trang Admin
+          Back to Admin
         </Link>
 
         {/* Project Header Card */}
@@ -85,7 +85,7 @@ export default async function AdminProjectDetailPage({ params }: { params: Promi
         {/* Milestones Card */}
         {project.milestones && project.milestones.length > 0 && (
           <div className="bg-white border border-gray-200/80 rounded-xl p-5 shadow-sm space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-3 border-b border-gray-100">Cột mốc dự án</h2>
+            <h2 className="text-lg font-semibold text-gray-900 pb-3 border-b border-gray-100">Project milestones</h2>
             <div className="grid gap-3 sm:grid-cols-2">
               {[...project.milestones]
                 .sort((a, b) => a.position - b.position)
@@ -104,12 +104,12 @@ export default async function AdminProjectDetailPage({ params }: { params: Promi
         {/* Status History Card */}
         {project.statusHistory.length > 0 && (
           <div className="bg-white border border-gray-200/80 rounded-xl p-5 shadow-sm space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-3 border-b border-gray-100">Lịch sử trạng thái</h2>
+            <h2 className="text-lg font-semibold text-gray-900 pb-3 border-b border-gray-100">Status history</h2>
             <div className="space-y-3 pt-1">
               {project.statusHistory.map((h, i) => (
                 <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-3 text-sm p-4 bg-gray-50 rounded-lg border border-gray-100/50">
                   <span className="text-gray-400 text-xs whitespace-nowrap min-w-[140px]">
-                    {new Date(h.changedAt).toLocaleString('vi-VN')}
+                    {new Date(h.changedAt).toLocaleString('en-US')}
                   </span>
                   <div className="flex-1 flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span className="text-gray-600">

@@ -49,8 +49,8 @@ async function ProjectsList() {
   } catch {
     return (
       <div className="text-center py-12 bg-white rounded-xl border border-red-100 shadow-sm max-w-xl mx-auto p-6">
-        <p className="text-red-500 font-medium">Đã xảy ra lỗi khi tải danh sách dự án.</p>
-        <p className="text-gray-400 mt-2 text-sm">Vui lòng thử lại sau.</p>
+        <p className="text-red-500 font-medium">An error occurred while loading the project list.</p>
+        <p className="text-gray-400 mt-2 text-sm">Please try again later.</p>
       </div>
     )
   }
@@ -63,12 +63,12 @@ async function ProjectsList() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V4a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Bạn chưa có dự án nào</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">You don't have any projects yet</h3>
         <p className="text-gray-500 mb-6 text-sm max-w-md mx-auto">
-          Bắt đầu quản lý dự án của bạn bằng cách tạo dự án đầu tiên ngay bây giờ.
+          Start managing your projects by creating your first project now.
         </p>
         <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white font-medium px-6 py-2.5 rounded-lg transition-colors">
-          <Link href="/projects/new">Tạo dự án đầu tiên</Link>
+          <Link href="/projects/new">Create your first project</Link>
         </Button>
       </div>
     )
@@ -112,16 +112,16 @@ function ProjectsListSkeleton() {
 function GuestHomePanel() {
   return (
     <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm max-w-xl mx-auto p-8">
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">Trang chủ TBA</h3>
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">TBA Home</h3>
       <p className="text-gray-500 mb-6 text-sm">
-        Đăng nhập để xem danh sách dự án, theo dõi tiến độ và tạo yêu cầu mới.
+        Log in to view projects, track progress, and create new requests.
       </p>
       <div className="flex flex-col sm:flex-row gap-3">
         <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white">
-          <Link href="/login">Đăng nhập</Link>
+          <Link href="/login">Log in</Link>
         </Button>
         <Button asChild variant="outline">
-          <Link href="/register">Đăng ký tài khoản</Link>
+          <Link href="/register">Register</Link>
         </Button>
       </div>
     </div>
@@ -137,7 +137,7 @@ export default async function Home() {
     user = decodeJwt(token)
   }
 
-  const displayName = user?.displayName || 'Khách hàng'
+  const displayName = user?.displayName || 'Customer'
   const isAuthenticated = Boolean(user)
 
   return (
@@ -166,16 +166,16 @@ export default async function Home() {
           {isAuthenticated ? (
             <form action={logoutAction}>
               <Button type="submit" variant="outline" size="sm" className="text-gray-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors">
-                Đăng xuất
+                Log out
               </Button>
             </form>
           ) : (
             <div className="flex gap-2">
               <Button asChild variant="ghost" size="sm">
-                <Link href="/login">Đăng nhập</Link>
+                <Link href="/login">Log in</Link>
               </Button>
               <Button asChild size="sm" className="bg-teal-600 hover:bg-teal-700 text-white">
-                <Link href="/register">Đăng ký</Link>
+                <Link href="/register">Register</Link>
               </Button>
             </div>
           )}
@@ -187,27 +187,27 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-              {isAuthenticated ? `Chào mừng trở lại, ${displayName}` : 'Chào mừng đến TBA'}
+              {isAuthenticated ? `Welcome back, ${displayName}` : 'Welcome to TBA'}
             </h1>
-            <p className="text-gray-500 mt-1">Hệ thống quản lý và bàn giao dự án</p>
+            <p className="text-gray-500 mt-1">Project management and delivery system</p>
           </div>
           <div className="flex gap-3 shrink-0">
             {isAuthenticated ? (
               <>
                 <Button asChild variant="outline">
-                  <Link href="/projects">Tất cả dự án</Link>
+                  <Link href="/projects">All projects</Link>
                 </Button>
                 <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
-                  <Link href="/projects/new">+ Tạo dự án mới</Link>
+                  <Link href="/projects/new">+ Create new project</Link>
                 </Button>
               </>
             ) : (
               <>
                 <Button asChild variant="outline">
-                  <Link href="/login">Đăng nhập</Link>
+                  <Link href="/login">Log in</Link>
                 </Button>
                 <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
-                  <Link href="/register">Đăng ký</Link>
+                  <Link href="/register">Register</Link>
                 </Button>
               </>
             )}
@@ -221,7 +221,7 @@ export default async function Home() {
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900">
-              {isAuthenticated ? 'Dự án gần đây' : 'Tổng quan'}
+              {isAuthenticated ? 'Recent projects' : 'Overview'}
             </h2>
           </div>
           {isAuthenticated ? (
@@ -242,18 +242,18 @@ export default async function Home() {
               <svg className="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
-              Quy trình dự án
+              Project workflow
             </h3>
             <div className="flex flex-col gap-3">
               {[
-                { status: 'SUBMITTED', desc: 'Dự án đã được gửi đi' },
-                { status: 'ANALYZING', desc: 'Đang phân tích yêu cầu' },
-                { status: 'IN_DEVELOPMENT', desc: 'Đang triển khai thực hiện' },
-                { status: 'AWAITING_REVIEW', desc: 'Chờ khách hàng duyệt' },
-                { status: 'IN_REVISION', desc: 'Đang chỉnh sửa theo phản hồi' },
-                { status: 'FINALIZING', desc: 'Đang hoàn thiện sản phẩm' },
-                { status: 'DELIVERED', desc: 'Đã bàn giao thành công' },
-                { status: 'CANCELLED', desc: 'Dự án đã hủy' },
+                { status: 'SUBMITTED', desc: 'Project submitted' },
+                { status: 'ANALYZING', desc: 'Analyzing requirements' },
+                { status: 'IN_DEVELOPMENT', desc: 'In development' },
+                { status: 'AWAITING_REVIEW', desc: 'Awaiting customer review' },
+                { status: 'IN_REVISION', desc: 'In revision' },
+                { status: 'FINALIZING', desc: 'Finalizing' },
+                { status: 'DELIVERED', desc: 'Delivered successfully' },
+                { status: 'CANCELLED', desc: 'Cancelled' },
               ].map(item => (
                 <div key={item.status} className="flex items-center justify-between gap-2 text-xs border-b border-gray-50 pb-2 last:border-0 last:pb-0">
                   <StatusBadge status={item.status} />

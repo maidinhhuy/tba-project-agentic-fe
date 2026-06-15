@@ -140,7 +140,7 @@ async function ProjectDetailContent({ id }: { id: string }) {
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Quay lại Dashboard
+            Back to Dashboard
           </Link>
           <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
             {project.name}
@@ -161,8 +161,8 @@ async function ProjectDetailContent({ id }: { id: string }) {
               }`}
             >
               {project.revisionCount <= 1
-                ? 'Còn 1 lần chỉnh sửa cuối'
-                : `Còn ${project.revisionCount} lần chỉnh sửa`}
+                ? '1 revision remaining'
+                : `${project.revisionCount} revisions remaining`}
             </span>
           )}
         </div>
@@ -173,7 +173,7 @@ async function ProjectDetailContent({ id }: { id: string }) {
           <Card>
             <CardHeader className="pb-3">
               <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                Mô tả dự án / Description
+                Description
               </h2>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -182,7 +182,7 @@ async function ProjectDetailContent({ id }: { id: string }) {
               {project.reference && (
                 <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
                   <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-                    Tài liệu tham khảo / Reference
+                    Reference
                   </h3>
                   <a
                     href={project.reference}
@@ -209,7 +209,7 @@ async function ProjectDetailContent({ id }: { id: string }) {
             <Card>
               <CardHeader className="pb-3">
                 <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                  Lịch sử cập nhật / Activity
+                  Activity
                 </h2>
               </CardHeader>
               <CardContent>
@@ -217,13 +217,13 @@ async function ProjectDetailContent({ id }: { id: string }) {
                   {activityEntries.map((entry, i) => (
                     <li key={i} className="flex gap-4 text-sm items-start">
                       <time className="text-gray-400 dark:text-gray-500 shrink-0 font-medium tabular-nums min-w-[120px] pt-0.5">
-                        {new Date(entry.changedAt).toLocaleString('vi-VN')}
+                        {new Date(entry.changedAt).toLocaleString('en-US')}
                       </time>
                       <div className="flex-1 bg-gray-50 dark:bg-muted/50 rounded-lg p-3 border border-gray-100 dark:border-border/50">
                         <MarkdownPreview content={entry.reason ?? ''} className="text-sm" />
                         {entry.changedBy && (
                           <span className="text-xs text-gray-400 dark:text-gray-500 mt-1 block">
-                            Được thực hiện bởi: {entry.changedBy}
+                            Performed by: {entry.changedBy}
                           </span>
                         )}
                       </div>
@@ -239,7 +239,7 @@ async function ProjectDetailContent({ id }: { id: string }) {
           <Card className="h-full">
             <CardHeader className="pb-3">
               <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                Mốc thời gian / Milestones
+                Milestones
               </h2>
             </CardHeader>
             <CardContent className="pt-2">

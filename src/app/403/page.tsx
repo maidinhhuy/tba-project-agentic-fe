@@ -13,20 +13,20 @@ export default function ForbiddenPage() {
         
         <div className="space-y-2">
           <h1 className="text-3xl font-bold text-gray-900 tracking-tight">403</h1>
-          <h2 className="text-xl font-semibold text-gray-800">Không Có Quyền Truy Cập</h2>
+          <h2 className="text-xl font-semibold text-gray-800">Access Denied</h2>
           <p className="text-gray-500 text-sm">
-            Bạn không có quyền truy cập trang này.
+            You do not have permission to access this page.
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
           <Button asChild className="bg-teal-600 hover:bg-teal-700 text-white font-medium px-6 py-2.5 rounded-lg transition-colors">
-            <Link href="/">Quay về Trang chủ</Link>
+            <Link href="/">Back to Home</Link>
           </Button>
           
           <form action={logoutAction} className="w-full sm:w-auto">
             <Button type="submit" variant="outline" className="w-full text-gray-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors">
-              Đăng xuất
+              Log out
             </Button>
           </form>
         </div>

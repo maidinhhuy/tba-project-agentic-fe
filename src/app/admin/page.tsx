@@ -155,14 +155,14 @@ export default async function AdminDashboard({
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 tracking-tight">All Projects</h1>
-            <p className="text-gray-500 text-sm mt-1">Danh sách tất cả dự án trong hệ thống</p>
+            <p className="text-gray-500 text-sm mt-1">List of all projects in the system</p>
           </div>
         </div>
 
         {/* Filters & Sorting Panel */}
         <div className="bg-white border border-gray-200/80 rounded-xl p-5 shadow-sm space-y-4">
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Lọc theo trạng thái</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Filter by status</h2>
             <div className="flex flex-wrap gap-2">
               {ALL_STATUSES.map((statusItem) => {
                 const isActive = activeStatuses.includes(statusItem.value)
@@ -192,10 +192,10 @@ export default async function AdminDashboard({
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 border-t border-gray-100">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 mr-2">Sắp xếp theo:</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 mr-2">Sort by:</span>
               {[
-                { value: 'status', label: 'Trạng thái' },
-                { value: 'updatedAt', label: 'Cập nhật lúc' },
+                { value: 'status', label: 'Status' },
+                { value: 'updatedAt', label: 'Last updated' },
               ].map((sortItem) => {
                 const isActive = sortBy === sortItem.value
                 const sortUrl = getSortUrl(activeStatuses, sortItem.value, sortBy, sortDir)
@@ -235,7 +235,7 @@ export default async function AdminDashboard({
                 <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
-                Xoá bộ lọc
+                Clear filters
               </Link>
             )}
           </div>
@@ -268,10 +268,10 @@ function AdminProjectsTableSkeleton() {
           <thead className="bg-gray-50/75 border-b border-gray-200">
             <tr>
               <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Customer</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Tên dự án</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Trạng thái</th>
+              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Project name</th>
+              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Status</th>
               <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Milestone active</th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Cập nhật lúc</th>
+              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Last updated</th>
               <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Action</th>
             </tr>
           </thead>
@@ -355,14 +355,14 @@ async function AdminProjectsTable({
     if (e.status === 401) {
       return (
         <div className="text-center py-12 bg-white rounded-xl border border-red-100 shadow-sm max-w-xl mx-auto p-6">
-          <p className="text-red-500 font-medium">Bạn không có quyền truy cập trang này.</p>
+          <p className="text-red-500 font-medium">You do not have permission to access this page.</p>
         </div>
       )
     }
     return (
       <div className="text-center py-12 bg-white rounded-xl border border-red-100 shadow-sm max-w-xl mx-auto p-6">
-        <p className="text-red-500 font-medium">Đã xảy ra lỗi khi tải danh sách dự án.</p>
-        <p className="text-gray-400 mt-2 text-sm">Vui lòng thử lại sau.</p>
+        <p className="text-red-500 font-medium">An error occurred while loading projects.</p>
+        <p className="text-gray-400 mt-2 text-sm">Please try again later.</p>
       </div>
     )
   }
@@ -375,9 +375,9 @@ async function AdminProjectsTable({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V4a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Chưa có dự án nào được gửi.</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">No projects have been submitted yet.</h3>
         <p className="text-gray-500 text-sm max-w-md mx-auto">
-          Hiện tại không tìm thấy dự án nào khớp với bộ lọc đã chọn.
+          No projects matching the selected filters were found.
         </p>
       </div>
     )
@@ -397,17 +397,17 @@ async function AdminProjectsTable({
             <thead className="bg-gray-50/75 border-b border-gray-200">
               <tr>
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Customer</th>
-                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Tên dự án</th>
+                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Project name</th>
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
                   <Link href={getSortUrl(activeStatuses, 'status', sortBy, sortDir)} className="hover:text-teal-600 transition-colors flex items-center gap-1.5 select-none group font-semibold uppercase">
-                    Trạng thái
+                    Status
                     {renderSortIcon('status', sortBy, sortDir)}
                   </Link>
                 </th>
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Milestone active</th>
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
                   <Link href={getSortUrl(activeStatuses, 'updatedAt', sortBy, sortDir)} className="hover:text-teal-600 transition-colors flex items-center gap-1.5 select-none group font-semibold uppercase">
-                    Cập nhật lúc
+                    Last updated
                     {renderSortIcon('updatedAt', sortBy, sortDir)}
                   </Link>
                 </th>
@@ -421,7 +421,7 @@ async function AdminProjectsTable({
                 const milestoneInfo = project.activeMilestoneName || project.productType || '—'
                 const dateVal = project.updatedAt || project.createdAt
                 const formattedDate = dateVal
-                  ? new Date(dateVal).toLocaleDateString('vi-VN', {
+                  ? new Date(dateVal).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: '2-digit',
                       day: '2-digit',
@@ -450,7 +450,7 @@ async function AdminProjectsTable({
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <Button asChild variant="outline" size="sm" className="hover:border-teal-500 hover:text-teal-600 transition-colors">
                         <Link href={`/admin/projects/${project.projectId}`}>
-                          Quản lý <span className="sr-only">View</span>
+                          Manage <span className="sr-only">View</span>
                         </Link>
                       </Button>
                     </td>
@@ -469,7 +469,7 @@ async function AdminProjectsTable({
             const milestoneInfo = project.activeMilestoneName || project.productType || '—'
             const dateVal = project.updatedAt || project.createdAt
             const formattedDate = dateVal
-              ? new Date(dateVal).toLocaleDateString('vi-VN', {
+              ? new Date(dateVal).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: '2-digit',
                   day: '2-digit',
@@ -494,7 +494,7 @@ async function AdminProjectsTable({
                 <div className="pt-2">
                   <Button asChild variant="outline" size="sm" className="w-full text-center py-2">
                     <Link href={`/admin/projects/${project.projectId}`}>
-                      Quản lý <span className="sr-only">View</span>
+                      Manage <span className="sr-only">View</span>
                     </Link>
                   </Button>
                 </div>

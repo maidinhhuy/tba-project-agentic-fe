@@ -67,7 +67,7 @@ export default function ProjectForm() {
       toast.error(result.error)
       return
     }
-    toast.success('Dự án đã được gửi.')
+    toast.success('Project submitted.')
     router.push('/')
   }
 
@@ -285,7 +285,7 @@ export default function ProjectForm() {
         disabled={isSubmitting}
         className="w-full sm:w-auto bg-teal-600 hover:bg-teal-700 text-white font-medium px-6 transition-colors shadow-sm"
       >
-        {isSubmitting ? 'Đang gửi…' : 'Submit Project'}
+        {isSubmitting ? 'Submitting...' : 'Submit Project'}
       </Button>
     </form>
   )
